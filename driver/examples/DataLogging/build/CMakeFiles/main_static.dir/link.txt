@@ -1,1 +1,0 @@
-aarch64-rpi3-linux-gnu-g++  -fpermissive -lpthread -O3   CMakeFiles/main_static.dir/main.cpp.o  -o main_static 
