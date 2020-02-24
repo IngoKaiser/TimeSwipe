@@ -1,0 +1,4 @@
+/Users/kaiser/Code/cpp/TimeSwipe/driver/examples/DataLogging/build/CMakeFiles/rebuild_cache.dir
+/Users/kaiser/Code/cpp/TimeSwipe/driver/examples/DataLogging/build/CMakeFiles/edit_cache.dir
+/Users/kaiser/Code/cpp/TimeSwipe/driver/examples/DataLogging/build/CMakeFiles/main_static.dir
+/Users/kaiser/Code/cpp/TimeSwipe/driver/examples/DataLogging/build/CMakeFiles/main.dir

@@ -1,0 +1,1 @@
+aarch64-rpi3-linux-gnu-g++  -fpermissive -lpthread -O3   CMakeFiles/main.dir/main.cpp.o  -o main  ../../../build/libtimeswipe.a 

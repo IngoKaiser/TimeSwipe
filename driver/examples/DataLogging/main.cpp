@@ -68,7 +68,8 @@ int main(int argc, char *argv[])
     auto& configitem = *config.begin();
     if (input.length()) configitem = *config.find(input);
     if(dumpname.length()) {
-        data_log.open(dumpname);
+        // data_log.open(dumpname, std::ios::out | std::ios::binary);
+        // data_log.open(dumpname);
         dump = true;
     }
 
@@ -95,6 +96,7 @@ int main(int argc, char *argv[])
     std::signal(SIGTERM, signal_handler);
     shutdown_handler = [&](int signal) {
         tswipe.Stop();
+        data_log.close();
         exit(1);
     };
 
@@ -116,11 +118,27 @@ int main(int argc, char *argv[])
         return 1;
     }
 
+    long logRate = 600000; // 10 min in ms
+    long latest = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count();
+
     ret = tswipe.Start([&](auto&& records, uint64_t errors) {
+            long now = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count();
+            if (!data_log.is_open() || (now - latest > logRate))
+            {
+                if (data_log.is_open())
+                {
+                    data_log.close();
+                }
+                data_log.open(std::to_string(now) + ".log", std::ios::out | std::ios::binary);
+                // data_log.open(std::to_string(now) + ".log");
+                latest = now;
+            }
+
             for (size_t i = 0; i < records.size(); i++) {
+                data_log.write((char *) &records[i], sizeof(Record));
                 const auto& rec = records[i];
-                if (i==0) std::cout << rec.Sensors[0] << "\t" << rec.Sensors[1] << "\t" << rec.Sensors[2] << "\t" << rec.Sensors[3] << "\n";
-                if (dump) data_log << rec.Sensors[0] << "\t" << rec.Sensors[1] << "\t" << rec.Sensors[2] << "\t" << rec.Sensors[3] << "\n";
+                // if (i==0) std::cout << rec.Sensors[0] << "\t" << rec.Sensors[1] << "\t" << rec.Sensors[2] << "\t" << rec.Sensors[3] << "\n";
+                // if (dump) data_log << rec.Sensors[0] << "\t" << rec.Sensors[1] << "\t" << rec.Sensors[2] << "\t" << rec.Sensors[3] << "\n";
             }
     });
     if (!ret) {
@@ -128,7 +146,7 @@ int main(int argc, char *argv[])
         return -1;
     }
 
-    std::this_thread::sleep_for(std::chrono::seconds(10));
+    std::this_thread::sleep_for(std::chrono::hours(8760)); //runs for a year if not interrupted
 
     // Board Stop
     if (!tswipe.Stop()) {

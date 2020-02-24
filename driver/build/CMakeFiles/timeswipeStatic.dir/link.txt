@@ -1,0 +1,2 @@
+aarch64-rpi3-linux-gnu-ar qc libtimeswipe.a  CMakeFiles/timeswipeStatic.dir/src/timeswipe.cpp.o CMakeFiles/timeswipeStatic.dir/src/board_iface.cpp.o CMakeFiles/timeswipeStatic.dir/3rdParty/BCMsrc/bcm2835.c.o CMakeFiles/timeswipeStatic.dir/src/RaspberryPi/bcmspi.cpp.o
+echo libtimeswipe.a

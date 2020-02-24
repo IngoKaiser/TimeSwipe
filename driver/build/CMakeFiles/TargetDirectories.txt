@@ -1,0 +1,3 @@
+/Users/kaiser/Code/cpp/TimeSwipe/driver/build/CMakeFiles/rebuild_cache.dir
+/Users/kaiser/Code/cpp/TimeSwipe/driver/build/CMakeFiles/edit_cache.dir
+/Users/kaiser/Code/cpp/TimeSwipe/driver/build/CMakeFiles/timeswipeStatic.dir
